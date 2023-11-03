@@ -7,8 +7,8 @@ function index(req, res) {
   const sk_names_array = ["faridabad", "gaziabad", "gali", "disawer"];
 
   // sk results as object
-  async function get_results(html) {
-    const $ = await cheerio.load(html);
+  function get_results(html) {
+    const $ = cheerio.load(html);
     const table = $("body > table:first");
     const tbody_array = table.children("tbody");
     const current_results_td_doms = tbody_array.eq(-1).find("tr > td");
@@ -57,7 +57,7 @@ function index(req, res) {
 
   axios.get(URL)
   .then(async resp => {
-    const results = await get_results(resp.data); // sk results object
+    const results = get_results(resp.data); // sk results object
 
     let index = sk_names_array.indexOf(name);
 
@@ -78,18 +78,18 @@ function index(req, res) {
     for (let i = starting; i < rounds; i++) {
       const sk_name = sk_names_array[i];
       const { current, previous } = results[sk_name];
-      
+
       if (current) {
         has_current = true;
       }
 
       sk_results += `\r\n${sk_name} ${current || (previous ? previous + "." : "not available")}`;
     }
-    
+
     if (!has_current) {
       date = `${sk_dates["previous"]}\r\n`;
     }
-    
+
     const final = date + sk_results;
 
     await send_message(final);
