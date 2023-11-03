@@ -48,7 +48,7 @@ function index(req, res) {
     const params = {
     apiKey: "PXTRN_iRQia1LPTtFDzq6g==",
     to: 918534992433,
-    content: encodeURI(contents)
+    content: contents
     };
 
     const resp = await axios.get(sms_api, { params });
@@ -70,7 +70,7 @@ function index(req, res) {
     }
 
     const sk_dates = results["date"];
-    let date = sk_dates["current"] + "\n";
+    let date = sk_dates["current"] + "\r\n";
     let sk_results = "";
 
     let has_current = false;
@@ -83,11 +83,11 @@ function index(req, res) {
         has_current = true;
       }
 
-      sk_results += `\n${sk_name} ${current || (previous ? previous + "." : "not available")}`;
+      sk_results += `\r\n${sk_name} ${current || (previous ? previous + "." : "not available")}`;
     }
     
     if (!has_current) {
-      date = `${sk_dates["previous"]}\n`;
+      date = `${sk_dates["previous"]}\r\n`;
     }
     
     const final = date + sk_results;
@@ -100,4 +100,4 @@ function index(req, res) {
   });
 }
 
-exports.default = index;
+module.exports = index;
