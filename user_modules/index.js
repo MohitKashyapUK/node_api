@@ -48,7 +48,7 @@ function index(req, res) {
     const params = {
     apiKey: "PXTRN_iRQia1LPTtFDzq6g==",
     to: 918534992433,
-    content: encodeURIComponent(contents)
+    content: encodeURI(contents)
     };
 
     const resp = await axios.get(sms_api, { params });
