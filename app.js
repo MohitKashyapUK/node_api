@@ -8,7 +8,7 @@ const user_modules_path = "./user_modules/";
 const index = require(user_modules_path + "index.js");
 
 // URL root
-app.get('/:name', index);
+app.get('/sk/:name', index);
 
 // starting express
 app.listen(port, () => {
