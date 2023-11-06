@@ -5,7 +5,7 @@ const port = 3000;
 
 const user_modules_path = "./user_modules/";
 
-const index = require(user_modules_path + "index");
+const sk = require(user_modules_path + "sk");
 const lucky_numbers = require(user_modules_path + "lucky_numbers");
 
 // URL root
@@ -15,7 +15,7 @@ app.get("/", (req, res) => res.send("Hello, this is the home page!"));
 app.get("/sk/lucky_numbers", lucky_numbers);
 
 // get sk results by name
-app.get('/sk/:name', index);
+app.get('/sk/:name', sk);
 
 // starting express
 app.listen(port, () => {
