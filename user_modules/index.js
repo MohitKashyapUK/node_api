@@ -7,7 +7,13 @@ function index(req, res) {
   const sk_names_array = ["faridabad", "gaziabad", "gali", "disawer"];
 
   // sk results as object
-  function get_results(html) {
+  function get_results(html) { // yah function html se sk results scrape karke object return karega jisme date bhi hogi
+    /*
+      return = {
+        faridabad: { current: 65, previous: 58 }
+      }
+      // isme date bhi hogi isi tarah aur result ek ki bajaye 4 bhi ho sakte hai
+    */
     const $ = cheerio.load(html);
     const table = $("body > table:first");
     const tbody_array = table.children("tbody");
@@ -59,23 +65,31 @@ function index(req, res) {
   .then(async resp => {
     const results = get_results(resp.data); // sk results object
 
-    let index = sk_names_array.indexOf(name);
+    let index = sk_names_array.indexOf(name); // names array me se sk name ka index find kiya jaa raha hai, agar find hua to 0 se 3 ke beech me value hogi barna -1
 
-    if (index != -1) {
+    const NOT_FOUND = -1;
+
+    if (index != NOT_FOUND) { // loop ek baar hi chalega
       var starting = index;
       var rounds = starting + 1;
-    } else {
+    } else { // chaar baar loop chalega
       var rounds = 4;
       var starting = 0;
     }
 
-    const sk_dates = results["date"];
-    let date = sk_dates["current"] + "\r\n";
-    let sk_results = "";
+    const sk_dates = results["date"]; // yah ek object hai jisme current aur previous dates hai
+    let date = sk_dates["current"] + "\r\n"; // agar ek bhi result current ka hai to iski date bhi current ki hogi
+    let sk_results = ""; // yaha par sk results aur unke naam aayenge
 
-    let has_current = false;
+    let has_current = false; // yah hame batayega ki result aaj ka hai ya kal ka
 
-    for (let i = starting; i < rounds; i++) {
+    // loop logic
+    /*
+      starting variable ko 0 se lekar 3 tak ki value di gayi hai.
+      rounds variable ki value ek jyada hogi starting variable se agar result name se maanga gaya hai, barna 4 value hogi taaki loop chaar baar chal sake
+    */
+
+    for (let i = starting; i < rounds; i++) { // result(s) ko string me
       const sk_name = sk_names_array[i];
       const { current, previous } = results[sk_name];
 
@@ -86,14 +100,14 @@ function index(req, res) {
       sk_results += `\r\n${sk_name} ${current || (previous ? previous + "." : "not available")}`;
     }
 
-    if (!has_current) {
+    if (!has_current) { // agar current result nahi hai to previous date set ki jaayegi
       date = `${sk_dates["previous"]}\r\n`;
     }
 
-    const final = date + sk_results;
+    const final = date + sk_results; // sk result(s)
 
-    await send_message(final);
-    res.send(final);
+    await send_message(final); // number par SMS send kiya jaa raha hai
+    res.send(final); // client response
   })
   .catch(error => {
     console.log(error.message);
