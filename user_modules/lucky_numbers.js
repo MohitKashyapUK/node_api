@@ -121,7 +121,7 @@ async function lucky_numbers(req, res) {
     results += value + ", ";
   });
 
-  //await send_message(results); // sending sms
+  await send_message(results); // sending sms
   res.send(results);
 }
 
