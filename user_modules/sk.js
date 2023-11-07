@@ -1,5 +1,6 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
+const send_message = require("./libs/send_message");
 
 function index(req, res) {
   const URL = "http://satta-king.in"; // sk url for scraping sk results
@@ -48,20 +49,7 @@ function index(req, res) {
     return results;
   }
 
-  // send sms
-  async function send_message(contents) {
-    const sms_api = "https://platform.clickatell.com/messages/http/send";
-    const params = {
-    apiKey: "PXTRN_iRQia1LPTtFDzq6g==",
-    to: 918534992433,
-    content: contents
-    };
-
-    const resp = await axios.get(sms_api, { params });
-    return resp.data;
-  }
-
-  axios.get(URL)
+  axios.get(URL) // getting sk html
   .then(async resp => {
     const results = get_results(resp.data); // sk results object
 
@@ -106,7 +94,7 @@ function index(req, res) {
 
     const final = date + sk_results; // sk result(s)
 
-    await send_message(final); // number par SMS send kiya jaa raha hai
+    //await send_message(final); // number par SMS send kiya jaa raha hai
     res.send(final); // client response
   })
   .catch(error => {

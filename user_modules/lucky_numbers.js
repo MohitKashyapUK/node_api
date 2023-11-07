@@ -1,4 +1,6 @@
-function lucky_numbers(req, res) {
+const send_message = require("./libs/send_message");
+
+async function lucky_numbers(req, res) {
   function get_3_numbers() {
     const results_array = [19, 82, 40, 81, 83, 28, 26, 43, 65, 55, 82, 56, 53, 97, 22, 82, 98, 87, 10, 78, 37, 87, 45, 26, 16, 87, 98, 75, 94, 98];
     
@@ -118,14 +120,9 @@ function lucky_numbers(req, res) {
   
     results += value + ", ";
   });
-  
-  const url = 'https://platform.clickatell.com/messages/http/send?apiKey=PXTRN_iRQia1LPTtFDzq6g==&to=918534992433&content=' + results;
-  
-  fetch(url)
-  .catch(err => console.log(err))
-  .final(() => {
-    res.send(results);
-  });
+
+  //await send_message(results); // sending sms
+  res.send(results);
 }
 
 module.exports = lucky_numbers;
