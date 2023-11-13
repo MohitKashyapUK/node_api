@@ -3,7 +3,7 @@ const axios = require("axios");
 function proxy(req, res) {
   const client_headers = req.headers;
 
-  const url = decodeURIComponent(req.params.url);
+  const url = decodeURIComponent(req.query.url);
 
   axios.get(url, {
     responseType: "stream",
