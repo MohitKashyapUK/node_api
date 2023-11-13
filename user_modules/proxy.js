@@ -15,7 +15,7 @@ function proxy(req, res) {
     // headers: client_headers
   })
     .then((response) => {
-      // url headers
+      // URL headers
       const url_headers = JSON.parse(JSON.stringify(response.headers));
 
       console.log(url_headers);
