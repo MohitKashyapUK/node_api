@@ -5,6 +5,8 @@ function proxy(req, res) {
 
   const url = decodeURIComponent(req.query.url);
 
+  console.log(url);
+
   const url_object = new URL(url);
   client_headers.host = url_object.hostname;
 
