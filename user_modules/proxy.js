@@ -18,6 +18,8 @@ function proxy(req, res) {
       // url headers
       const url_headers = JSON.parse(JSON.stringify(response.headers));
 
+      console.log(url_headers);
+
       // client headers
       res.set(url_headers);
 
