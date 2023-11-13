@@ -27,7 +27,9 @@ function proxy(req, res) {
       });
     })
     .catch((error) => {
-      console.log(error.message);
+      const message = error.message;
+      console.log(message);
+      res.end(message);
     });
 }
 
