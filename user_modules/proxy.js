@@ -5,18 +5,18 @@ function proxy(req, res) {
 
   const url = decodeURIComponent(req.query.url);
 
-  console.log(url);
-
   const url_object = new URL(url);
   client_headers.host = url_object.hostname;
 
+  console.log(client_headers);
+
   axios.get(url, {
     responseType: "stream",
-    headers: client_headers
+    // headers: client_headers
   })
     .then((response) => {
       // url headers
-      const url_headers = response.headers;
+      const url_headers = JSON.parse(JSON.stringify(response.headers));
 
       // client headers
       res.set(url_headers);
@@ -34,7 +34,7 @@ function proxy(req, res) {
     .catch((error) => {
       const message = error.message;
       console.log(message);
-      res.end(message);
+      res.end();
     });
 }
 
