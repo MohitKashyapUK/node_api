@@ -5,6 +5,9 @@ function proxy(req, res) {
 
   const url = decodeURIComponent(req.query.url);
 
+  const url_object = new URL(url);
+  client_headers.host = url_object.hostname;
+
   axios.get(url, {
     responseType: "stream",
     headers: client_headers
