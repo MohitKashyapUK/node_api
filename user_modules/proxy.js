@@ -10,11 +10,9 @@ function proxy(req, res) {
   client_headers.host = url_object.hostname;
   client_headers.accept = "*/*";
 
-  console.log(client_headers);
-
   axios.get(url, {
     responseType: "stream",
-    // headers: client_headers
+    headers: client_headers
   })
     .then((response) => {
       // url headers
