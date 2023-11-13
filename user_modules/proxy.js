@@ -12,7 +12,7 @@ function proxy(req, res) {
 
   axios.get(url, {
     responseType: "stream",
-    headers: client_headers
+    // headers: client_headers
   })
     .then((response) => {
       // url headers
