@@ -3,33 +3,31 @@ const axios = require("axios");
 function proxy(req, res) {
   const client_headers = req.headers;
 
-  const { range, cookie, accept } = client_headers;
+  // const { range, cookie, accept } = client_headers;
 
-  const url = decodeURIComponent(req.query.url);
+  const url = "http://ip255965994.ahcdn.com/key=Kh4RIE1OQsJLQ8lmSd-pZw,end=1699971063/state=ZVNxMQ5w/buffer=4000000:22486092,1856.7/speed=207616/reftag=55309829/ssd7/65/6/218699196/b/328000/328611/328611.mp4"; // decodeURIComponent(req.query.url);
 
   const url_object = new URL(url);
 
-  // client_headers.host = url_object.hostname;
-  const hostname = url_object.hostname;
+  client_headers.host = url_object.hostname;
+  // const hostname = url_object.hostname;
   // client_headers.accept = "*/*";
 
-  const configs = { responseType: "stream", headers: { host: hostname } };
+  const configs = { responseType: "stream", headers: client_headers };
 
-  const headers = configs.headers;
+  // const headers = configs.headers;
 
-  if (range) {
-    headers.range = range;
-  }
+  // if (range) {
+  //   headers.range = range;
+  // }
 
-  if (cookie) {
-    headers["cookie"] = cookie;
-  }
+  // if (cookie) {
+  //   headers["cookie"] = cookie;
+  // }
 
-  if (accept) {
-    headers["accept"] = accept;
-  }
-
-  configs.headers = headers;
+  // if (accept) {
+  //   headers["accept"] = accept;
+  // }
 
   axios.get(url, configs)
     .then((response) => {
