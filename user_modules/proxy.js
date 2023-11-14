@@ -1,25 +1,30 @@
 const axios = require("axios");
 
-function proxy(req, res) {
+async function proxy(req, res) {
   const client_headers = req.headers;
-
-  // const { range, cookie, accept } = client_headers;
-
-  const url = "http://ip255965994.ahcdn.com/key=Kh4RIE1OQsJLQ8lmSd-pZw,end=1699971063/state=ZVNxMQ5w/buffer=4000000:22486092,1856.7/speed=207616/reftag=55309829/ssd7/65/6/218699196/b/328000/328611/328611.mp4"; // decodeURIComponent(req.query.url);
-
-  const url_object = new URL(url);
-
-  client_headers.host = url_object.hostname;
+  
+  const url = decodeURIComponent(req.query.url);
+  
+  // const url_object = new URL(url);
+  
+  // client_headers.host = url_object.hostname;
   // const hostname = url_object.hostname;
   // client_headers.accept = "*/*";
+  
+  console.log(client_headers);
 
-  const configs = { responseType: "stream", headers: client_headers };
+  // Axios configurations
+  const configs = { responseType: "stream", headers: {} };
+  
+  // Headers for HTTP request
+  const headers = configs.headers;
+  
+  // Destructuring client headers
+  const { range /* , cookie, accept, "cache-control": cache_control */ } = client_headers;
 
-  // const headers = configs.headers;
-
-  // if (range) {
-  //   headers.range = range;
-  // }
+  if (range) {
+    headers.range = range;
+  }
 
   // if (cookie) {
   //   headers["cookie"] = cookie;
@@ -27,6 +32,14 @@ function proxy(req, res) {
 
   // if (accept) {
   //   headers["accept"] = accept;
+  // }
+
+  // if (cache_control) {
+  //   headers["cache-control"] = cache_control;
+  // }
+
+  // if (client_headers["sec-ch-ua"]) {
+  //   headers["sec-ch-ua"] = client_headers["sec-ch-ua"];
   // }
 
   axios.get(url, configs)
@@ -48,7 +61,8 @@ function proxy(req, res) {
       });
     })
     .catch((error) => {
-      console.error("Error:", error);
+      console.log(error.message);
+
       res.end();
     });
 }
