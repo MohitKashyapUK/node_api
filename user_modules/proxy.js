@@ -12,8 +12,6 @@ function proxy(req, res) {
   const url = decodeURIComponent(req.query.url);
 
   client_headers.referer = url;
-  
-  console.log("Client headers:", client_headers);
 
   // Axios configurations
   const configs = { responseType: "stream", headers: client_headers };
@@ -26,8 +24,6 @@ function proxy(req, res) {
 
       // URL headers
       const url_headers = JSON.parse(JSON.stringify(response.headers));
-
-      console.log("URL headers:", url_headers);
 
       res.status(status);
 
