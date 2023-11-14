@@ -4,38 +4,22 @@ async function proxy(req, res) {
   const client_headers = req.headers;
 
   delete client_headers.host;
+
+  if (client_headers["referer"]) {
+    delete client_headers["referer"];
+  }
   
   const url = decodeURIComponent(req.query.url);
-  
-  // const url_object = new URL(url);
-  
-  // client_headers.host = url_object.hostname;
-  // const hostname = url_object.hostname;
-  // client_headers.accept = "*/*";
   
   console.log("Client headers:", client_headers);
 
   // Axios configurations
-  const configs = { responseType: "stream", headers: {} };
-  
-  // Headers for HTTP request
-  // const headers = configs.headers;
-  
-  // // Destructuring client headers
-  // const { range, "user-agent": user_agent } = client_headers;
-
-  // if (range) {
-  //   headers.range = range;
-  // }
-
-  // if (user_agent) {
-  //   headers["user-agent"] = user_agent;
-  // }
+  const configs = { responseType: "stream", headers: client_headers };
 
   axios.get(url, configs)
     .then((response) => {
       // URL headers
-      const url_headers = response.headers; // JSON.parse(JSON.stringify(response.headers));
+      const url_headers = JSON.parse(JSON.stringify(response.headers));
 
       console.log("URL headers:", url_headers);
 
@@ -53,7 +37,7 @@ async function proxy(req, res) {
       });
     })
     .catch((error) => {
-      console.log(error.message);
+      console.log(error);
 
       res.end();
     });
