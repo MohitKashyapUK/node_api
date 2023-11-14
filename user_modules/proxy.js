@@ -2,6 +2,8 @@ const axios = require("axios");
 
 async function proxy(req, res) {
   const client_headers = req.headers;
+
+  delete client_headers.host;
   
   const url = decodeURIComponent(req.query.url);
   
@@ -11,41 +13,31 @@ async function proxy(req, res) {
   // const hostname = url_object.hostname;
   // client_headers.accept = "*/*";
   
-  console.log(client_headers);
+  console.log("Client headers:", client_headers);
 
   // Axios configurations
   const configs = { responseType: "stream", headers: {} };
   
   // Headers for HTTP request
-  const headers = configs.headers;
+  // const headers = configs.headers;
   
-  // Destructuring client headers
-  const { range /* , cookie, accept, "cache-control": cache_control */ } = client_headers;
+  // // Destructuring client headers
+  // const { range, "user-agent": user_agent } = client_headers;
 
-  if (range) {
-    headers.range = range;
-  }
-
-  // if (cookie) {
-  //   headers["cookie"] = cookie;
+  // if (range) {
+  //   headers.range = range;
   // }
 
-  // if (accept) {
-  //   headers["accept"] = accept;
-  // }
-
-  // if (cache_control) {
-  //   headers["cache-control"] = cache_control;
-  // }
-
-  // if (client_headers["sec-ch-ua"]) {
-  //   headers["sec-ch-ua"] = client_headers["sec-ch-ua"];
+  // if (user_agent) {
+  //   headers["user-agent"] = user_agent;
   // }
 
   axios.get(url, configs)
     .then((response) => {
       // URL headers
       const url_headers = response.headers; // JSON.parse(JSON.stringify(response.headers));
+
+      console.log("URL headers:", url_headers);
 
       // setting client headers
       res.set(url_headers);
