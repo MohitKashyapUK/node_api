@@ -1,34 +1,38 @@
-const axios = require("axios");
+const axios = require("axios").default;
 
 function proxy(req, res) {
-  const client_headers = req.headers;
-
-  delete client_headers.host;
-
-  if (client_headers["referer"]) {
-    delete client_headers["referer"];
+  const request_headers = req.headers;
+  
+  delete request_headers.host;
+  
+  const url = req.params[0];
+  
+  if (request_headers.referer !== undefined) {
+    request_headers.referer = url;
   }
   
-  const url = decodeURIComponent(req.query.url);
-
-  client_headers.referer = url;
+  const params = req.query;
 
   // Axios configurations
-  const configs = { responseType: "stream", headers: client_headers };
+  const configs = {
+    method: "get",
+    url,
+    responseType: "stream",
+    headers: request_headers,
+    params
+  };
 
-  console.log("Configs:", configs);
-
-  axios.get(url, configs)
+  axios(configs)
     .then((response) => {
       const status = Number(response.status);
 
       // URL headers
-      const url_headers = JSON.parse(JSON.stringify(response.headers));
+      const response_headers = JSON.parse(JSON.stringify(response.headers));
 
       res.status(status);
 
       // setting client headers
-      res.set(url_headers);
+      res.set(response_headers);
 
       // Read data from the stream.
       response.data.on("data", (data) => {
@@ -41,9 +45,7 @@ function proxy(req, res) {
       });
     })
     .catch((error) => {
-      console.log(error);
-
-      res.end();
+      res.end("Something wrong: " + error.message);
     });
 }
 

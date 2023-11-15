@@ -19,7 +19,7 @@ app.get("/sk/lucky-numbers", lucky_numbers);
 // get sk results by name
 app.get('/sk/:name', sk);
 
-app.get("/proxy", proxy);
+app.get(/^\/proxy\/(.+)$/, proxy);
 
 app.get("/testing", testing);
 
