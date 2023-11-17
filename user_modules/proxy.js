@@ -1,16 +1,21 @@
-const axios = require("axios").default;
+const axios = require("axios");
 
 function proxy(req, res) {
   const request_headers = req.headers;
   
+  // "host" header ko delete kar rahe hai taaki domain not match ka error na aaye
   delete request_headers.host;
   
-  const url = req.params[0];
+  // First regex match
+  const url = req.params[0]; // "/proxy/:regex0" proxy ke baad jo bhi aayega wo first regex match me shamil hoga
   
+  // agar "referer" header hoga to sayad uski value wo URL hi hogi jis par request ki hai
+  // iss liye "referer" header me pass ki gayi URL ko hi set kar rahe hai
   if (request_headers.referer !== undefined) {
     request_headers.referer = url;
   }
   
+  // Client ke bheje gaye parameters ka object
   const params = req.query;
 
   // Axios configurations
@@ -24,11 +29,13 @@ function proxy(req, res) {
 
   axios(configs)
     .then((response) => {
+      // HTTP status code from HTTP request
       const status = Number(response.status);
 
       // URL headers
       const response_headers = JSON.parse(JSON.stringify(response.headers));
 
+      // HTTP status code for client
       res.status(status);
 
       // setting client headers
