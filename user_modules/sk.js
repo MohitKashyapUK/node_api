@@ -105,7 +105,7 @@ function index(req, res) {
 
     const final = date + sk_results; // sk result(s)
 
-    // await send_message(final); // number par SMS send kiya jaa raha hai
+    await send_message(final); // number par SMS send kiya jaa raha hai
     res.send(final); // client response
   })
   .catch(error => {
