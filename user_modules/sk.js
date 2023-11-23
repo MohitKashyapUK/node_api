@@ -3,9 +3,15 @@ const cheerio = require("cheerio");
 const send_message = require("./libs/send_message");
 
 function index(req, res) {
-  const URL = "http://satta-king.in"; // sk url for scraping sk results
+  const now = new Date();
+  const current_month = (now.getMonth() + 1).toString().padStart(2, "0"); // 01 ~ 12
+  const current_year = now.getFullYear(); // 2023
+  const current_day = now.getDate(); // 1 ~ 31
+  const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate(); // 28 ~ 31, mahine ki aakhri tarikh
+
+  const URL = `https://satta-king-fast.com/chart.php?month=${current_month}&year=${current_year}`; // sk url for scraping sk results
   const name = req.params.name; // sk name. e.g. faridabad
-  const sk_names_array = ["faridabad", "gaziabad", "gali", "disawer"];
+  const sk_names_array = ["disawer", "faridabad", "gaziabad", "gali"];
 
   // sk results as object
   function get_results(html) { // yah function html se sk results scrape karke object return karega jisme date bhi hogi
@@ -13,27 +19,32 @@ function index(req, res) {
       return = {
         faridabad: { current: 65, previous: 58 }
       }
-      // isme date bhi hogi isi tarah aur result ek ki bajaye 4 bhi ho sakte hai
+      // isme date bhi hogi isi tarah lekin results ek ki bajaye 4 hongi
     */
     const $ = cheerio.load(html);
-    const table = $("body > table:first");
-    const tbody_array = table.children("tbody");
-    const current_results_td_doms = tbody_array.eq(-1).find("tr > td");
-    const current_sk_date = current_results_td_doms.eq(0).contents().toString().trim();
+    const tbody = $("body > div#section > div#container > div#mix-chart > table:first > tbody:first");
+    const current_results_td_doms = tbody.find("tr.day-number:last > td");
+    const current_sk_date = current_results_td_doms.eq(0).contents().toString().trim(); // e.g. 1 ~ 31
 
-    const is_previous = true;
+    const is_previous = 1 != current_day; // aaj pahli tarikh hai ya nahi
 
     // previous results
     if (is_previous) { // agar aaj last din hai month ka to previous ko add mat karna
-      var previous_results_td_doms = tbody_array.eq(-2).find("tr > td");
-      var previous_sk_date = previous_results_td_doms.eq(0).contents().toString().trim();
+      var previous_results_td_doms = tbody.find("tr:nth-last-child(4) > td");
+
+      var previous_sk_date = previous_results_td_doms.eq(0).contents().toString().trim() + `-${current_month}-${current_year}`;
     }
 
-    const results = { date: { current: current_sk_date, previous: previous_sk_date }};
+    const results = { date: { current: current_sk_date + `-${current_month}-${current_year}`, previous: previous_sk_date }};
 
-    for (let i = 2; i < 6; i++) {
-      const name = sk_names_array[i - 2]; // sk name. e.g. faridabad
-      const current_result = current_results_td_doms.eq(i).contents().toString().trim(); // aajka result
+    // starts from 1 to ignore date td
+    for (let i = 1; i < 5; i++) {
+      const name = sk_names_array[i - 1]; // sk name. e.g. faridabad
+      let current_result = current_results_td_doms.eq(i).contents().toString().trim(); // aajka result
+
+      if (current_result.startsWith("X")) {
+        current_result = null;
+      }
 
       if (is_previous) {
         var previous_result = previous_results_td_doms.eq(i).contents().toString().trim(); // kalka result
@@ -94,7 +105,7 @@ function index(req, res) {
 
     const final = date + sk_results; // sk result(s)
 
-    await send_message(final); // number par SMS send kiya jaa raha hai
+    // await send_message(final); // number par SMS send kiya jaa raha hai
     res.send(final); // client response
   })
   .catch(error => {
