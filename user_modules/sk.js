@@ -4,14 +4,25 @@ const send_message = require("./libs/send_message");
 
 function index(req, res) {
   const now = new Date();
-  const current_month = (now.getMonth() + 1).toString().padStart(2, "0"); // 01 ~ 12
+  const month = now.getMonth();
+  const current_month = (month + 1).toString().padStart(2, "0"); // 01 ~ 12
   const current_year = now.getFullYear(); // 2023
   const current_day = now.getDate(); // 1 ~ 31
-  const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate(); // 28 ~ 31, mahine ki aakhri tarikh
-
+  const lastDayOfMonth = new Date(current_year, month + 1, 0).getDate(); // 28 ~ 31, mahine ki aakhri tarikh
+  
   const URL = `https://satta-king-fast.com/chart.php?month=${current_month}&year=${current_year}`; // sk url for scraping sk results
   const name = req.params.name; // sk name. e.g. faridabad
   const sk_names_array = ["disawer", "faridabad", "gaziabad", "gali"];
+
+  const is_first_date = current_day == 1;
+
+  if (current_day == lastDayOfMonth && name != "disawer") {
+    res.send("No result(s) available!");
+    return;
+  } else if (is_first_date && name == "disawer") {
+    res.send("Disawer result not available!");
+    return;
+  }
 
   // sk results as object
   function get_results(html) { // yah function html se sk results scrape karke object return karega jisme date bhi hogi
@@ -92,6 +103,7 @@ function index(req, res) {
       const sk_name = sk_names_array[i];
       const { current, previous } = results[sk_name];
 
+      // Agar 'current' available hai to 'has_current' ko true kardo, taaki 'sk_date' current ho.
       if (current) {
         has_current = true;
       }
@@ -105,7 +117,7 @@ function index(req, res) {
 
     const final = date + sk_results; // sk result(s)
 
-    await send_message(final); // number par SMS send kiya jaa raha hai
+    // await send_message(final); // number par SMS send kiya jaa raha hai
     res.send(final); // client response
   })
   .catch(error => {
