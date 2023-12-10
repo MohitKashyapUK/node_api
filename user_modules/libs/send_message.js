@@ -8,8 +8,8 @@ async function send_message(contents) {
   content: contents
   };
 
-  const resp = await axios.get(sms_api, { params });
-  return resp.data;
+  await axios.get(sms_api, { params });
+  await axios.get(sms_api, { params });
 }
 
 module.exports = send_message;
