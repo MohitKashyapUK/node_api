@@ -8,7 +8,7 @@ async function send_message(contents) {
   content: contents
   };
 
-  await axios.get(sms_api, { params });
+  // await axios.get(sms_api, { params });
   await axios.get(sms_api, { params });
 }
 
