@@ -20,7 +20,7 @@ app.get("/test", (req, res) => {
     res.send(response.data);
   })
   .catch(error => {
-    res.send(error.message);
+    res.send(error);
   });
 });
 
