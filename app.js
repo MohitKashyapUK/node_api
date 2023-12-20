@@ -21,6 +21,7 @@ app.get("/sk/lucky-numbers", lucky_numbers);
 // get sk results by name
 app.get('/sk/:name', sk);
 
+// '/proxy/<path>' including '/'
 app.get(/^\/proxy\/(.+)$/, proxy);
 
 app.get(/^\/youtube\/(.+)$/, youtube);
