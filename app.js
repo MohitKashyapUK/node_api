@@ -10,6 +10,20 @@ const lucky_numbers = require(user_modules_path + "lucky_numbers");
 const proxy = require(user_modules_path + "proxy");
 const youtube = require(user_modules_path + "youtube");
 
+app.get("/test", (req, res) => {
+  const axios = require("axios");
+
+  const URL = "https://apkcombo.com";
+
+  axios.get(URL)
+  .then(response => {
+    res.send(response.data);
+  })
+  .catch(error => {
+    res.send(error.message);
+  });
+});
+
 // URL root
 app.get("/", (req, res) => {
   res.send("Hello, this is the home page!")
