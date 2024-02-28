@@ -2,7 +2,7 @@
  * Function to convert a given date from any time zone to Indian Standard Time (IST).
  *
  * @returns {Date} The converted date in Indian Standard Time (IST).
- */
+*/
 function getISTDate() {
     // e.g. "UTC"
     const timeZoneName = Intl.DateTimeFormat().resolvedOptions().timeZone;
