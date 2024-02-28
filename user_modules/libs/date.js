@@ -20,5 +20,4 @@ function getISTDate() {
     return istTime;
 }
 
-const istDate = getISTDate();
-console.log(istDate);
+module.exports = getISTDate;
