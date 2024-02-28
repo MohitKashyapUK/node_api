@@ -3,7 +3,7 @@
  *
  * @returns {Date} The converted date in Indian Standard Time (IST).
 */
-function getISTDate() {
+function ISTDate() {
     // e.g. "UTC"
     const timeZoneName = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -23,4 +23,4 @@ function getISTDate() {
     return istTime;
 }
 
-module.exports = getISTDate;
+module.exports = ISTDate;
