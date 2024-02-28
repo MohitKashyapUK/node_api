@@ -4,9 +4,11 @@
  * @returns {Date} The converted date in Indian Standard Time (IST).
  */
 function getISTDate() {
-    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    // e.g. "UTC"
+    const timeZoneName = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
     // Create a new Date object with the input date and time zone
-    const inputDate = new Date(new Date().toLocaleString('en-US', { timeZone: timeZone }));
+    const inputDate = new Date(new Date().toLocaleString('en-US', { timeZoneName: timeZoneName }));
 
     // Get the UTC time of the input date
     const utcTime = inputDate.getTime() + (inputDate.getTimezoneOffset() * 60000);
@@ -17,6 +19,7 @@ function getISTDate() {
     // Calculate the IST time by adding the IST offset to the UTC time
     const istTime = new Date(utcTime + istOffset);
 
+    // IST date object
     return istTime;
 }
 
