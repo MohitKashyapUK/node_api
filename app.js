@@ -26,7 +26,7 @@ app.get("/test", (req, res) => {
 
 // URL root
 app.get("/", (req, res) => {
-  res.send(new Date().toString());
+  res.send("Homepage!");
 });
 
 // get 10 lucky numbers
