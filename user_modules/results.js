@@ -6,7 +6,7 @@ function main(req, res) {
 
     axios.get(URL)
     .then(({data}) => {
-        const $ = cheerio.loadBuffer(data);
+        const $ = cheerio.load(data);
         
         const element = $("body > div.container-fluid > div > font > div:nth-child(1) > div.game_result > div > font:nth-child(3) > b");
         
