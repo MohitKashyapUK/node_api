@@ -9,25 +9,10 @@ const sk = require(user_modules_path + "sk");
 const lucky_numbers = require(user_modules_path + "lucky_numbers");
 const proxy = require(user_modules_path + "proxy");
 const youtube = require(user_modules_path + "youtube");
-
-app.get("/test", (req, res) => {
-  const axios = require("axios");
-
-  const URL = "https://apkcombo.com";
-
-  axios.get(URL)
-  .then(response => {
-    res.send(response.data);
-  })
-  .catch(error => {
-    res.send(error);
-  });
-});
+const results = require(user_modules_path + "results");
 
 // URL root
-app.get("/", (req, res) => {
-  res.send("Homepage!");
-});
+app.get("/", (req, res) => res.send("Homepage!"));
 
 // get 10 lucky numbers
 app.get("/sk/lucky-numbers", lucky_numbers);
@@ -39,6 +24,8 @@ app.get('/sk/:name', sk);
 app.get(/^\/proxy\/(.+)$/, proxy);
 
 app.get(/^\/youtube\/(.+)$/, youtube);
+
+app.get(/^\/results?/, results);
 
 // starting express
 app.listen(port, () => {
