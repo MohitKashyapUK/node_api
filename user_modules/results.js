@@ -8,9 +8,9 @@ function main(req, res) {
     .then(({data}) => {
         const $ = cheerio.load(data);
         
-        const element = $("body > div.container-fluid > div > font > div:nth-child(1) > div.game_result > div > font:nth-child(3) > b");
+        const element = $("body > div.container-fluid > div > font > div:nth-child(1) > div.game_result > div > font:nth-child(3) > b").contents().toString().trim();
         
-        res.send(element.toString());
+        res.send(element);
     });
 }
 
