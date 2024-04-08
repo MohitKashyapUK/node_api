@@ -2,7 +2,9 @@ function main(req, res) {
     const cheerio = require("cheerio");
     const axios = require("axios");
 
-    axios.get()
+    const URL = "https://sattakingrecords.com";
+
+    axios.get(URL)
     .then(({data}) => {
         const $ = cheerio.loadBuffer(data);
         
