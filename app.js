@@ -1,9 +1,12 @@
+// Libraries
 const express = require("express");
 
+// Initializing the app
 const app = express();
 const port = 3000;
 
-const user_modules_path = "./user_modules/";
+// Custom libraries
+const user_modules_path = "./user_modules/"; // Base or path to the libraries
 
 const sk = require(user_modules_path + "sk");
 const lucky_numbers = require(user_modules_path + "lucky_numbers");
@@ -27,7 +30,7 @@ app.get(/^\/youtube\/(.+)$/, youtube);
 
 app.get(/^\/results?/, results);
 
-// starting express
+// starting express (app)
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 });
