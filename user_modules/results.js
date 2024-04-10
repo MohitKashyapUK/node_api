@@ -10,7 +10,11 @@ function main(req, res) {
         
         const element = $("body > div.container-fluid > div > font > div:nth-child(1) > div.game_result > div > font:nth-child(3) > b").contents().toString().trim();
         
-        res.json({"Faridabad": element});
+        if (element.length == 2) {
+            res.json({"Faridabad": element});
+        } else {
+            res.send("Result is not available.");
+        }
     });
 }
 
