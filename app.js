@@ -1,9 +1,15 @@
+// Note: Async function mein await lagaana jaruri hai kyonki Cyclic backend ko terminate kar deta hai agar request full fill ho jaye to.
+
 // Libraries
 const express = require("express");
 
 // Initializing the app
 const app = express();
 const port = 3000;
+
+// Middlewares
+app.use(express.json()) // for parsing application/json
+app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 // Custom libraries
 const user_modules_path = "./user_modules/"; // Base or path to the libraries
@@ -13,6 +19,7 @@ const lucky_numbers = require(user_modules_path + "lucky_numbers");
 const proxy = require(user_modules_path + "proxy");
 const youtube = require(user_modules_path + "youtube");
 const results = require(user_modules_path + "results");
+const wb_api_webhook = require(user_modules_path + "wb_api_webhook");
 
 // URL root
 app.get("/", (req, res) => res.send("Homepage!"));
@@ -29,6 +36,9 @@ app.get(/^\/proxy\/(.+)$/, proxy);
 app.get(/^\/youtube\/(.+)$/, youtube);
 
 app.get(/^\/results?/, results);
+
+
+app.post("/wb_api_webhook", wb_api_webhook);
 
 // starting express (app)
 app.listen(port, () => {
