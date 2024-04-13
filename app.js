@@ -38,7 +38,7 @@ app.get(/^\/youtube\/(.+)$/, youtube);
 app.get(/^\/results?/, results);
 
 
-app.post("/wb_api_webhook", wb_api_webhook);
+app.post("/wb_api_webhookk", wb_api_webhook);
 
 // starting express (app)
 app.listen(port, () => {
