@@ -12,7 +12,7 @@ async function main(req, res) {
 
   // await send_text_to_whatsapp(contents.toString());
 
-  res.send(req.body.toString());
+  res.send(req.body);
 }
 
 module.exports = main;
