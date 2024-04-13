@@ -1,6 +1,7 @@
 const axios = require("axios");
+const send_text = require("./send_text_to_whatsapp");
 
-async function send_message(contents) {
+async function main(contents) {
   const sms_api = "https://platform.clickatell.com/messages/http/send";
   const params = {
   apiKey: "PXTRN_iRQia1LPTtFDzq6g==",
@@ -9,7 +10,8 @@ async function send_message(contents) {
   };
 
   // await axios.get(sms_api, { params });
+  await send_text(contents);
   await axios.get(sms_api, { params });
 }
 
-module.exports = send_message;
+module.exports = main;
