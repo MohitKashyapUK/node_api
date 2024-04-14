@@ -21,7 +21,7 @@ async function index(name = "all") {
   // const name = req.params.name; // sk name. e.g. faridabad
   const sk_names_array = ["disawer", "faridabad", "gaziabad", "gali"];
 
-  // const is_first_date = current_day == 1; // Type: Boolean
+  const is_first_date = current_day == 1; // Type: Boolean
 
   // Bina results ke wapas bhej do agar
   if (current_day == lastDayOfMonth && name != "disawer") { // Aaj mahine ka aakhri din nahi hai aur "name" variable mein "disawer" value nahi hai
