@@ -19,10 +19,14 @@ const lucky_numbers = require(user_modules_path + "lucky_numbers");
 const proxy = require(user_modules_path + "proxy");
 const youtube = require(user_modules_path + "youtube");
 const results = require(user_modules_path + "results");
+const testing = require(user_modules_path + "testing");
+
 const wb_api_webhook = require(user_modules_path + "wb_api_webhook");
 
 // URL root
 app.get("/", (req, res) => res.send("Homepage!"));
+
+app.get("/testing", testing);
 
 // get 10 lucky numbers
 app.get("/sk/lucky-numbers", lucky_numbers);
