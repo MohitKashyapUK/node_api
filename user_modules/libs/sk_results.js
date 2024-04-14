@@ -2,7 +2,7 @@ const axios = require("axios"); // For HTTP request
 const cheerio = require("cheerio"); // For HTML scraping
 const date = require("./date");
 
-async function index() {
+async function index(name="all") {
   /*
     return = {
       faridabad: { current: 65, previous: 58 }
@@ -18,18 +18,16 @@ async function index() {
   const lastDayOfMonth = new Date(current_year, month + 1, 0).getDate(); // 28 ~ 31, mahine kee aakhri tarikh
   
   const URL = `https://satta-king-fast.com/chart.php?month=${current_month}&year=${current_year}`; // SK URL for scraping SK results
-  const name = req.params.name; // sk name. e.g. faridabad
+  // const name = req.params.name; // sk name. e.g. faridabad
   const sk_names_array = ["disawer", "faridabad", "gaziabad", "gali"];
 
   const is_first_date = current_day == 1; // Type: Boolean
 
   // Bina results ke wapas bhej do agar
   if (current_day == lastDayOfMonth && name != "disawer") { // Aaj mahine ka aakhri din nahi hai aur "name" variable mein "disawer" value nahi hai
-    res.send("No result(s) available!");
-    return;
+    return "No result(s) available!";
   } else if (is_first_date && name == "disawer") { // Aaj pahli tarikh hai aur "name" variable mein value "disawer" hai
-    res.send("Disawer result not available!");
-    return;
+    return "Disawer result not available!";
   }
 
   let html;
