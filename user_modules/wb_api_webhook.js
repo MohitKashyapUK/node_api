@@ -35,7 +35,7 @@ async function main(req, res) {
       text += previous + ".";
     }
 
-    text = (is_current ? current_date : previous_date) + "\n" + text;
+    text = (is_current ? current_date : previous_date) + "\n\n" + text;
     message = text;
   } else {
     const array = sk_names_array.slice(0, 4);
