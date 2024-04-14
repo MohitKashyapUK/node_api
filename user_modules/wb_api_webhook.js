@@ -10,11 +10,17 @@ async function main(req, res) {
   }
 
   const text = message_object.body.trim().toLowerCase();
-  // const sk_names_array = ["faridabad", "gaziabad", "gali", "disawer", "all"];
-  // const name = sk_names_array.find(value => value == text);
-  // const results = await sk_results();
+  const sk_names_array = ["faridabad", "gaziabad", "gali", "disawer", "all"];
+  const name = sk_names_array.find(value => value == text);
+  const results = await sk_results();
 
-  await send_text_to_whatsapp(text);
+  if (name != "all") {
+    const sk_obj = results[name];
+  } else {
+    
+  }
+
+  // await send_text_to_whatsapp(text);
 
   res.send(req.body);
 }
