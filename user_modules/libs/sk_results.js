@@ -30,7 +30,8 @@ async function index(name="all") {
     return "Disawer result not available!";
   }
 
-  let html = await axios.get(URL).data; // Getting HTML content of SK
+  let html = await axios.get(URL); // Getting HTML content of SK
+  html = html.data;
 
   const $ = cheerio.load(html); // Initializing
   const tbody = $("body > div#section > div#container > div#mix-chart > table:first > tbody:first");
