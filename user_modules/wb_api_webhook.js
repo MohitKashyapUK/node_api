@@ -45,7 +45,7 @@ async function main(req, res) {
     for (let i = 0; i < 4; i++) {
       const sk_name = array[i];
       const { current, previous } = results[sk_name];
-      let text = "\n" + name + " ";
+      let text = "\n" + sk_name + " ";
 
       if (current) {
         text += current;
