@@ -37,7 +37,8 @@ app.get('/sk/:name', sk);
 // '/proxy/<path>' including '/'
 app.get(/^\/proxy\/(.+)/, proxy);
 
-app.get(/^\/youtube\/(.+)/, youtube);
+// /^\/youtube\/(.+)/
+app.get("/youtube/video", youtube);
 
 app.get(/^\/results?/, results);
 
