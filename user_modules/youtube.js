@@ -1,7 +1,18 @@
-const axios = require("axios");
+// const axios = require("axios");
+const ytdl = require("ytdl-core");
 
 function youtube(req, res) {
-  res.send("Under development!");
+  // const url = req.params[0];
+
+  // ytdl.getInfo(url)
+  //   .then(data => {
+  //     const formats = data.formats;
+  //     const videowithaudio = formats.filter(value => value.hasAudio && value.hasVideo);
+  //     res.json(videowithaudio);
+  //   }).catch(error => {
+  //     res.json({ "error": new String(error) });
+  //   })
+  res.send(new String(req.params));
 }
 
 module.exports = youtube;
