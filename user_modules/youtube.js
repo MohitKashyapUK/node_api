@@ -12,7 +12,7 @@ function youtube(req, res) {
   //   }).catch(error => {
   //     res.json({ "error": new String(error) });
   //   })
-  res.send(new String(req.params));
+  res.json(req.params);
 }
 
 module.exports = youtube;
