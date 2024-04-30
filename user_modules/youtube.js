@@ -2,7 +2,13 @@
 const ytdl = require("ytdl-core");
 
 function youtube(req, res) {
+  // const methods = ["video", "playlist"];
+  // const get = req.query.get;
   let url = req.query.url;
+
+  // if (!(get == undefined)) {
+    
+  // }
   
   if (url == "") {
     res.json({ "error": "YouTube video URL is required." });
