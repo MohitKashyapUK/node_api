@@ -7,4 +7,4 @@ async function main(req, res) {
   res.json(video);
 }
 
-main();
+module.exports = main;
