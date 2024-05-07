@@ -1,6 +1,9 @@
 # Use an official Node.js runtime as the base image
 FROM node:latest
 
+# Working directory
+WORKDIR /
+
 # Copy the files into the docker image
 COPY . .
 
