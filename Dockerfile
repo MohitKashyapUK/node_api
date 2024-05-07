@@ -6,7 +6,7 @@ RUN apt-get install git
 RUN git clone https://github.com/MohitKashyapUK/node_api.git
 
 # Set the working directory in the container
-WORKDIR node_api
+WORKDIR /node_api
 
 # Install npm dependencies
 RUN npm install
