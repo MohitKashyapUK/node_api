@@ -1,12 +1,12 @@
 # Use an official Node.js runtime as the base image
 FROM node:latest
 
-# Set the working directory in the container
-WORKDIR /app
-
 RUN apt-get install git
 
 RUN git clone https://github.com/MohitKashyapUK/node_api.git
+
+# Set the working directory in the container
+WORKDIR node_api
 
 # Install npm dependencies
 RUN npm install
