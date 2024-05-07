@@ -42,7 +42,7 @@ app.get('/sk/:name', sk);
 app.get(/^\/proxy\/(.+)/, proxy);
 
 // /^\/youtube\/(.+)/
-app.get("/youtube/video", youtube);
+app.get("/youtube", youtube);
 // app.get("/youtube/playlist", playlist);
 
 app.get(/^\/results?/, results);
