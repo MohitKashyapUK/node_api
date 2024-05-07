@@ -1,8 +1,10 @@
 # Use an official Node.js runtime as the base image
 FROM node:latest
 
+COPY . /app
+
 # Set the working directory in the container
-# WORKDIR /
+WORKDIR /app
 
 # RUN apt-get install git
 
