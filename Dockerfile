@@ -1,14 +1,8 @@
 # Use an official Node.js runtime as the base image
 FROM node:latest
 
-COPY . /app
-
-# Set the working directory in the container
-WORKDIR /app
-
-# RUN apt-get install git
-
-# RUN git clone https://github.com/MohitKashyapUK/node_api.git
+# Copy the files into the docker image
+COPY . .
 
 # Install npm dependencies
 RUN npm install
