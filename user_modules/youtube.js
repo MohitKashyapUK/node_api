@@ -1,5 +1,35 @@
 const ytdl = require("ytdl-core");
 
+function parse(stream, props) {
+  const obj = {};
+  props.forEach(key => obj[key] = stream[key]);
+  return obj;
+}
+
+function filter_video_streams(formats, props) {
+  const formats = [];
+  formats.forEach(stream => {
+    if (data.hasVideo && !data.hasAudio) formats.push(parse(stream, props));
+  });
+  return formats;
+}
+
+function filter_audio_streams(formats, props) {
+  const formats = [];
+  formats.forEach(stream => {
+    if (!data.hasVideo && data.hasAudio) formats.push(parse(stream, props));
+  });
+  return formats;
+}
+
+function filter_progressive_streams(formats, props) {
+  const formats = [];
+  formats.forEach(stream => {
+    if (data.hasVideo && data.hasAudio) formats.push(parse(stream, props));
+  });
+  return formats;
+}
+
 async function youtube(req, res) {
   try {
     const {id, resourceType} = req.query; // query parameters
@@ -17,27 +47,18 @@ async function youtube(req, res) {
   
     switch (resourceType) {
       case "video":
-        const video_formats = [];
-        formats.forEach(({hasAudio, hasVideo, container, contentLength, fps, qualityLabel, url, videoCodec}) => {
-          if (hasVideo && !hasAudio) video_formats.push({container, contentLength, fps, qualityLabel, url, videoCodec});
-        });
-        res.json(video_formats);
+        const video_props = ["container", "contentLength", "fps", "qualityLabel", "url", "videoCodec"];
+        res.json(filter_video_streams(formats, video_props));
         break;
   
       case "audio":
-        const audio_formats = [];
-        formats.forEach(({hasAudio, hasVideo, audioQuality, audioCodec, container, contentLength, url}) => {
-          if (!hasVideo && hasAudio) audio_formats.push({audioQuality, audioCodec, container, contentLength, url});
-        });
-        res.json(audio_formats);
+        const audio_props = ["hasAudio", "hasVideo", "audioQuality", "audioCodec", "container", "contentLength", "url"];
+        res.json(filter_audio_streams(formats, audio_props));
         break;
   
       case "progressive":
-        const progressive_formats = [];
-        formats.forEach(({hasAudio, hasVideo, audioQuality, fps, qualityLabel, quality, container, audioCodec, videoCodec, codecs, contentLength, url}) => {
-          if (hasVideo && hasAudio) progressive_formats.push({audioQuality, audioCodec, codecs, container, contentLength, fps, qualityLabel, quality, url, videoCodec});
-        });
-        res.json(progressive_formats);
+        const progressive_props = ["hasAudio", "hasVideo", "audioQuality", "fps", "qualityLabel", "quality", "container", "audioCodec", "videoCodec", "codecs", "contentLength", "url"];
+        res.json(filter_progressive_streams(formats, progressive_props));
         break;
   
       default:
