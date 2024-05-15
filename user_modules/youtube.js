@@ -9,7 +9,7 @@ function parse(stream, props) {
 function filter_video_streams(formats, props) {
   const array = [];
   formats.forEach(stream => {
-    if (data.hasVideo && !data.hasAudio) array.push(parse(stream, props));
+    if (stream.hasVideo && !stream.hasAudio) array.push(parse(stream, props));
   });
   return array;
 }
@@ -17,7 +17,7 @@ function filter_video_streams(formats, props) {
 function filter_audio_streams(formats, props) {
   const array = [];
   formats.forEach(stream => {
-    if (!data.hasVideo && data.hasAudio) array.push(parse(stream, props));
+    if (!stream.hasVideo && stream.hasAudio) array.push(parse(stream, props));
   });
   return array;
 }
@@ -25,7 +25,7 @@ function filter_audio_streams(formats, props) {
 function filter_progressive_streams(formats, props) {
   const array = [];
   formats.forEach(stream => {
-    if (data.hasVideo && data.hasAudio) array.push(parse(stream, props));
+    if (stream.hasVideo && stream.hasAudio) array.push(parse(stream, props));
   });
   return array;
 }
