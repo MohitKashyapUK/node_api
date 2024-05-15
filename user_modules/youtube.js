@@ -52,12 +52,12 @@ async function youtube(req, res) {
         break;
   
       case "audio":
-        const audio_props = ["hasAudio", "hasVideo", "audioQuality", "audioCodec", "container", "contentLength", "url"];
+        const audio_props = ["audioQuality", "audioCodec", "container", "contentLength", "url"];
         res.json(filter_audio_streams(formats, audio_props));
         break;
   
       case "progressive":
-        const progressive_props = ["hasAudio", "hasVideo", "audioQuality", "fps", "qualityLabel", "quality", "container", "audioCodec", "videoCodec", "codecs", "contentLength", "url"];
+        const progressive_props = ["audioQuality", "fps", "qualityLabel", "quality", "container", "audioCodec", "videoCodec", "codecs", "contentLength", "url"];
         res.json(filter_progressive_streams(formats, progressive_props));
         break;
   
