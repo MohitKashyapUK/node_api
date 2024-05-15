@@ -62,7 +62,7 @@ async function youtube(req, res) {
         break;
   
       default:
-        res.json({formats});
+        res.json({formats, title: details.videoDetails.title});
         break;
     }
   } catch (error) {
