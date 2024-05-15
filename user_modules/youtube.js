@@ -32,20 +32,20 @@ function filter_progressive_streams(formats, props) {
 
 async function youtube(req, res) {
   try {
-    const {id, resourceType} = req.query; // query parameters
+    const {id, filter} = req.query; // query parameters
   
     if (!id) { // id of yt video
       res.json({error: "ID required."});
       return;
-    } else if (!resourceType) { // type of resource e.g. video or audio
-      res.json({error: "Resource type required."});
+    } else if (!filter) { // type of resource e.g. video or audio
+      res.json({error: "Filter required."});
       return;
     }
   
     const details = await ytdl.getInfo(id); // getting details of video
     const formats = details.formats; // formats or resolution of video
   
-    switch (resourceType) {
+    switch (filter) {
       case "video":
         const video_props = ["container", "contentLength", "fps", "qualityLabel", "url", "videoCodec"];
         res.json(filter_video_streams(formats, video_props));
