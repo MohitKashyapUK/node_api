@@ -4,6 +4,6 @@ const id = "miVF5Yn8cOE";
 
 ytdl.getInfo(id)
 .then(data => {
-  const formats = ytdl.filterFormats(data.formats, "videoonly");
-  console.log(formats);
+  // const formats = ytdl.filterFormats(data.formats, "videoonly");
+  console.log(data);
 })

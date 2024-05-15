@@ -48,21 +48,21 @@ async function youtube(req, res) {
     switch (filter) {
       case "video":
         const video_props = ["container", "contentLength", "fps", "qualityLabel", "url", "videoCodec"];
-        res.json(filter_video_streams(formats, video_props));
+        res.json({ formats: filter_video_streams(formats, video_props), title: details.videoDetails.title})
         break;
   
       case "audio":
         const audio_props = ["audioQuality", "audioCodec", "container", "contentLength", "url"];
-        res.json(filter_audio_streams(formats, audio_props));
+        res.json({ formats: filter_audio_streams(formats, audio_props), title: details.videoDetails.title});
         break;
   
       case "progressive":
         const progressive_props = ["audioQuality", "fps", "qualityLabel", "quality", "container", "audioCodec", "videoCodec", "codecs", "contentLength", "url"];
-        res.json(filter_progressive_streams(formats, progressive_props));
+        res.json({ formats: filter_progressive_streams(formats, progressive_props), title: details.videoDetails.title})
         break;
   
       default:
-        res.json(formats);
+        res.json({formats});
         break;
     }
   } catch (error) {
