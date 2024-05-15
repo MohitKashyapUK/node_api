@@ -7,27 +7,27 @@ function parse(stream, props) {
 }
 
 function filter_video_streams(formats, props) {
-  const formats = [];
+  const array = [];
   formats.forEach(stream => {
-    if (data.hasVideo && !data.hasAudio) formats.push(parse(stream, props));
+    if (data.hasVideo && !data.hasAudio) array.push(parse(stream, props));
   });
-  return formats;
+  return array;
 }
 
 function filter_audio_streams(formats, props) {
-  const formats = [];
+  const array = [];
   formats.forEach(stream => {
-    if (!data.hasVideo && data.hasAudio) formats.push(parse(stream, props));
+    if (!data.hasVideo && data.hasAudio) array.push(parse(stream, props));
   });
-  return formats;
+  return array;
 }
 
 function filter_progressive_streams(formats, props) {
-  const formats = [];
+  const array = [];
   formats.forEach(stream => {
-    if (data.hasVideo && data.hasAudio) formats.push(parse(stream, props));
+    if (data.hasVideo && data.hasAudio) array.push(parse(stream, props));
   });
-  return formats;
+  return array;
 }
 
 async function youtube(req, res) {
