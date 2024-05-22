@@ -7,7 +7,7 @@ const path = require("node:path");
 
 // Initializing the app
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000;
 
 // Middlewares
 app.use(cors());
