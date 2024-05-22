@@ -11,8 +11,8 @@ const port = 3000;
 
 // Middlewares
 app.use(cors());
-app.use(express.json()) // for parsing application/json
-app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+app.use(express.json()); // for parsing application/json
+app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 // Custom libraries
 const user_modules_path = "./user_modules/"; // Base path to the libraries
