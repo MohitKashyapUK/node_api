@@ -3,10 +3,11 @@
 // Libraries
 const express = require("express");
 const cors = require("cors");
+const path = require("node:path");
 
 // Initializing the app
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Middlewares
 app.use(cors());
@@ -14,18 +15,16 @@ app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 // Custom libraries
-const user_modules_path = "./user_modules/"; // Base or path to the libraries
+const user_modules_path = "./user_modules/"; // Base path to the libraries
 
-const sk = require(user_modules_path + "sk");
-const lucky_numbers = require(user_modules_path + "lucky_numbers");
-const proxy = require(user_modules_path + "proxy");
-const youtube = require(user_modules_path + "youtube");
-const results = require(user_modules_path + "results");
-const testing = require(user_modules_path + "testing");
-// const playlist = require(user_modules_path + "playlist");
-const ph = require(user_modules_path + "ph");
+const sk = require(path.join(user_modules_path, "sk"));
+const lucky_numbers = require(path.join(user_modules_path, "lucky_numbers"));
+const proxy = require(path.join(user_modules_path, "proxy"));
+const youtube = require(path.join(user_modules_path, "youtube"));
+const results = require(path.join(user_modules_path, "results"));
+const testing = require(path.join(user_modules_path, "testing"));
 
-const wb_api_webhook = require(user_modules_path + "wb_api_webhook");
+const wb_api_webhook = require(path.join(user_modules_path, "wb_api_webhook"));
 
 // URL root
 app.get("/", (req, res) => res.send("Homepage!"));
@@ -43,12 +42,9 @@ app.get(/^\/proxy\/(.+)/, proxy);
 
 // /^\/youtube\/(.+)/
 app.get("/youtube", youtube);
-// app.get("/youtube/playlist", playlist);
 
+// Get SK results
 app.get(/^\/results?/, results);
-
-app.get("/api/ph", ph);
-
 
 app.post("/wb_api_webhook", wb_api_webhook);
 

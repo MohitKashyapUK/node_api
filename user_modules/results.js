@@ -1,7 +1,7 @@
-function main(req, res) {
-    const cheerio = require("cheerio");
-    const axios = require("axios");
+const cheerio = require("cheerio");
+const axios = require("axios");
 
+function main(req, res) {
     const URL = "https://sattakingrecords.com";
 
     axios.get(URL)
