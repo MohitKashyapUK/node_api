@@ -1,5 +1,5 @@
 {
-  "name": "my_node",
+  "name": "node_api",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Mohit",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.6.0",

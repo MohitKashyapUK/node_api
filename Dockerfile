@@ -1,14 +1,17 @@
-# Use an official Node.js runtime as the base image
-FROM node:latest
+# Use a specific Node.js version as the base image
+FROM node:20
 
-# Working directory
-WORKDIR /
+# Set the working directory
+WORKDIR /app
 
-# Copy the files into the docker image
-COPY . .
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
 # Install npm dependencies
 RUN npm install
+
+# Copy the rest of the application files
+COPY . .
 
 # Expose the port on which the application will run
 EXPOSE 3000
