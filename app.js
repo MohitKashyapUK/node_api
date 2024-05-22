@@ -3,7 +3,6 @@
 // Libraries
 const express = require("express");
 const cors = require("cors");
-const path = require("node:path");
 
 // Initializing the app
 const app = express();
@@ -17,14 +16,14 @@ app.use(express.urlencoded({ extended: true })); // for parsing application/x-ww
 // Custom libraries
 const user_modules_path = "./user_modules/"; // Base path to the libraries
 
-const sk = require(path.join(user_modules_path, "sk"));
-const lucky_numbers = require(path.join(user_modules_path, "lucky_numbers"));
-const proxy = require(path.join(user_modules_path, "proxy"));
-const youtube = require(path.join(user_modules_path, "youtube"));
-const results = require(path.join(user_modules_path, "results"));
-const testing = require(path.join(user_modules_path, "testing"));
+const sk = require(user_modules_path + "sk");
+const lucky_numbers = require(user_modules_path + "lucky_numbers");
+const proxy = require(user_modules_path + "proxy");
+const youtube = require(user_modules_path + "youtube");
+const results = require(user_modules_path + "results");
+const testing = require(user_modules_path + "testing");
 
-const wb_api_webhook = require(path.join(user_modules_path, "wb_api_webhook"));
+const wb_api_webhook = require(user_modules_path + "wb_api_webhook");
 
 // URL root
 app.get("/", (req, res) => res.send("Homepage!"));
