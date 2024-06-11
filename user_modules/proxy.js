@@ -1,19 +1,17 @@
 const axios = require("axios");
 
 function proxy(req, res) {
-  const request_headers = req.headers;
+  const headers = req.headers;
   
   // "host" header ko delete kar rahe hai taaki domain not match ka error na aaye
-  delete request_headers.host;
+  delete headers.host;
   
   // First regex match
   const url = req.params[0]; // "/proxy/:regex0" proxy ke baad jo bhi aayega wo first regex match me shamil hoga
   
   // agar "referer" header hoga to sayad uski value wo URL hi hogi jis par request ki hai
   // iss liye "referer" header me pass ki gayi URL ko hi set kar rahe hai
-  if (request_headers.referer !== undefined) {
-    request_headers.referer = url;
-  }
+  if (headers.referer !== undefined) headers.referer = url;
   
   // Client ke bheje gaye parameters ka object
   const params = req.query;
@@ -23,7 +21,7 @@ function proxy(req, res) {
     method: "get",
     url,
     responseType: "stream",
-    headers: request_headers,
+    headers,
     params
   };
 
@@ -42,18 +40,17 @@ function proxy(req, res) {
       res.set(response_headers);
 
       // Read data from the stream.
-      response.data.on("data", (data) => {
-        res.write(data);
-      });
+      response.data.on("data", (data) => res.write(data));
   
       // Close the stream.
-      response.data.on("end", () => {
+      response.data.on("end", () => res.end());
+
+      response.data.on('error', (error) => {
         res.end();
+        console.error('Error while streaming:', error);
       });
     })
-    .catch((error) => {
-      res.end("Something wrong: " + error.message);
-    });
+    .catch((error) => res.end("Something wrong: " + error.message));
 }
 
 module.exports = proxy;
