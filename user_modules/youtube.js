@@ -1,6 +1,11 @@
 const ytdl = require("ytdl-core");
 
+// libs
 function parse(stream, props) {
+  /**
+   * @description: This function parses a stream object by given properties.
+   * @returns: Object
+   */
   const obj = {};
   props.forEach(key => obj[key] = stream[key]);
   obj["size"] = formatSize(obj["contentLength"]);
@@ -54,6 +59,7 @@ function formatSize(bytes) {
   return `${size.toFixed(3)}${unit}`;
 }
 
+// Main function
 async function youtube(req, res) {
   try {
     const {id, filter} = req.query; // query parameters

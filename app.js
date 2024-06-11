@@ -2,6 +2,7 @@
 
 // Libraries
 const express = require("express");
+const path = require('path');
 const cors = require("cors");
 
 // Initializing the app
@@ -12,6 +13,8 @@ const port = 3000;
 app.use(cors());
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Custom libraries
 const user_modules_path = "./user_modules/"; // Base path to the libraries
